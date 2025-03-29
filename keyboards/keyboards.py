@@ -3,16 +3,50 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMar
 # Основная клавиатура
 main_kb = ReplyKeyboardMarkup(
     keyboard=[
-        [KeyboardButton(text="Меню 1"), KeyboardButton(text="Меню 2")],
-        [KeyboardButton(text="Помощь")]
+        [KeyboardButton(text="Старт"), KeyboardButton(text="Рандомный совет")],
+        [KeyboardButton(text="Квиз"), KeyboardButton(text="Погода")],
     ],
     resize_keyboard=True
 )
 
-# Инлайн клавиатура (пример)
-inline_kb = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [InlineKeyboardButton(text="Кнопка 1", callback_data="button1")],
-        [InlineKeyboardButton(text="Кнопка 2", callback_data="button2")]
-    ]
-) 
+#Клавиатура при отображении совета
+end_kb = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text='Закончить'), KeyboardButton(text='Хочу еще совет')],
+    ],
+    resize_keyboard=True
+)
+
+#Клавиатура после принятия ответа на вопросы квиза
+end_quiz_kb = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text='Закончить'), KeyboardButton(text='Еще вопрос'), KeyboardButton(text='Показать статистику')],
+    ],
+    resize_keyboard=True
+)
+
+#Клавиатура на выбор темы квиза
+quiz_kb = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text='География'), KeyboardButton(text='Наука')],
+        [KeyboardButton(text='Русский рок'), KeyboardButton(text='Автомобили')]
+    ],
+    resize_keyboard=True
+)
+
+
+def make_quiz_option_keyboard(items: list[str]) -> ReplyKeyboardMarkup:
+    """
+    Создаёт реплай-клавиатуру с кнопками в один ряд с вариантами ответов на вопрос
+    :param items: список текстов для кнопок
+    :return: объект реплай-клавиатуры
+    """
+    row = [KeyboardButton(text=item) for item in items]
+    return ReplyKeyboardMarkup(keyboard=[row], resize_keyboard=True)
+
+#кнопка отправить геолокацию
+geo_kb = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Отправить свою геолокацию', request_location=True)]
+    ],
+resize_keyboard=True
+)
